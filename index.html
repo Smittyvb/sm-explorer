@@ -96,6 +96,53 @@
         }
       }
     </style>
+    <script>
+      class Transaction {
+        constructor(tx) {
+          //the hash of the transaction
+          this.id = tx.id;
+          
+          //some "virtual" transactions don't get put on-chain
+          this.virtual = this.id.indexOf("sm_") === 0;
+          
+          //hash of block when the transaction occured
+          this.blockID = tx.block_id;
+          
+          //hash of block before the transaction occured
+          this.prevBlockID = tx.prev_block_id;
+          
+          //type of transaction, e.g. sm_open_pack, sm_find_match, sm_claim_reward, etc.
+          this.type = tx.type;
+          
+          //player who caused the transaction to occur
+          this.player = tx.player;
+          
+          //what is supposted to happen in the transaction
+          this.data = JSON.parse(tx.data);
+          
+          //results of performing the transaction, sometimes is null (such as for sm_claim_reward)
+          this.result = JSON.parse(tx.result);
+          
+          //boolean, true if the transaction worked and was valid, otherwise false
+          this.success = tx.success;
+          
+          //null if it worked, otherwise an object like {error: "It didn't work"}
+          this.error = tx.error;
+          
+          //block number when the transaction occured
+          this.block = tx.block_num;
+          
+          //date of when the transaction occured
+          this.date = tx.created_date;
+                    
+          //price data as of the transaction
+          this.priceData = {sbd: tx.sbd_price, steem: tx.steem_price};
+          
+          //original raw transaction
+          this.raw = tx;
+        }
+      }
+    </script>
   </head>
   <body>
     <nav>
