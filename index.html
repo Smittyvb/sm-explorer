@@ -213,8 +213,19 @@
             } else {
               edition = "promo";
             }
-            
             return "combined all " + (this.data.gold ? "gold " : "") + edition + " " + cardData.name + "s";
+          } else if (this.type === "sm_gift_cards") {
+            return "gifted " + this.data.cards.length + " card" + ((this.data.cards.length !== 1) ? "s" : "") + " to <span class='username'>" + this.data.to + "</span>"
+          } else if (this.type === "sm_gift_packs") {
+            var edition;
+            if (this.data.edition === 0) {
+              edition = "alpha";
+            } else if (this.data.edition === 1) {
+              edition = "beta";
+            } else {
+              edition = "promo";
+            }
+            return "gifted " + this.data.qty + " " + edition + " pack" + ((this.data.qty !== 1) ? "s" : "") + " to <span class='username'>" + this.data.to + "</span>";
           }
           return this.typeString();
         }
