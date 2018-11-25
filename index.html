@@ -187,7 +187,8 @@
             "sm_market_purchase": "bought cards on the market",
             "sm_market_sale": "fulfilled a sell order",
             "sm_gift_cards": "gifted cards",
-            "sm_cancel_match": "stopped looking for a battle"
+            "sm_cancel_match": "stopped looking for a battle",
+            "sm_open_all": "opened all of their booster packs"
           };
           console.log(this.type);
           console.log(this);
@@ -195,7 +196,7 @@
           return '<span class="raw-data">' + this.type + "</span>";
         }
         summary() {
-          if (this.type === "sm_pack_purchase") {
+          if (this.type === "sm_claim_reward") {
             if (this.data.type === "quest") {
               return "claimed a daily quest reward";
             }
@@ -207,7 +208,7 @@
           return `
             <div class="transaction${this.error ? " error-tx" : ""}" ${this.error ? 'title="Error: ' + this.error + '"e' : ""}>
               <span class="username">${this.player}</span>
-              ${this.typeString()}
+              ${this.summary()}
               <span class="block-number">${this.block}</span>
             </div>
           `;
