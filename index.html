@@ -65,12 +65,13 @@
         width: 25em;
         max-width: 75vw;
         border: 0.2em solid black;
-        margin: 0 auto;
+        margin: 0 auto 1em auto;
         text-align: left;
         padding: 1em;
       }
       .error-tx {
         text-decoration: line-through;
+        background-color: #ff5151;
       }
       .username {
         font-weight: bold;
@@ -138,10 +139,19 @@
           this.player = tx.player;
           
           //what is supposted to happen in the transaction
-          this.data = JSON.parse(tx.data);
+          try {
+            this.data = JSON.parse(tx.data);
+          } catch (e) {
+            this.data = tx.data;
+          }
           
           //results of performing the transaction, sometimes is null (such as for sm_claim_reward)
-          this.result = JSON.parse(tx.result);
+          try {
+            this.result = JSON.parse(tx.result);
+          } catch (e) {
+            //lazy fix for a weird api bug
+            this.result = JSON.parse(eval(tx.result));
+          }
           
           //boolean, true if the transaction worked and was valid, otherwise false
           this.success = tx.success;
@@ -166,14 +176,36 @@
             "sm_find_match": "started looking for a match",
             "sm_open_pack": "opened a pack",
             "sm_claim_reward": "claimed a reward",
-            "sm_team_reveal": "revaled their team"
+            "sm_team_reveal": "revaled their team",
+            "sm_combine_all": "combined cards",
+            "sm_combine_cards": "combined cards",
+            "sm_gift_packs": "gifted booster packs",
+            "sm_start_quest": "started a daily quest",
+            "sm_sell_cards": "placed a sell order",
+            "sm_cancel_sell": "cancelled a sell order",
+            "sm_pack_purchase": "purchased booster packs",
+            "sm_market_purchase": "bought cards on the market",
+            "sm_market_sale": "fulfilled a sell order",
+            "sm_gift_cards": "gifted cards",
+            "sm_cancel_match": "stopped looking for a battle"
           };
+          console.log(this.type);
+          console.log(this);
           if (types[this.type]) return types[this.type];
           return '<span class="raw-data">' + this.type + "</span>";
         }
+        summary() {
+          if (this.type === "sm_pack_purchase") {
+            if (this.data.type === "quest") {
+              return "claimed a daily quest reward";
+            }
+          }
+          return this.typeString();
+        }
         toHTML() {
+          if ((this.type === "sm_team_reveal") || (this.type === "sm_find_match")) return "";
           return `
-            <div class="transaction${this.error ? " error-tx" : ""}" ${this.error ? 'title="This transaction was invalid."' : ""}>
+            <div class="transaction${this.error ? " error-tx" : ""}" ${this.error ? 'title="Error: ' + this.error + '"e' : ""}>
               <span class="username">${this.player}</span>
               ${this.typeString()}
               <span class="block-number">${this.block}</span>
@@ -185,21 +217,21 @@
         }
       }
       window.addEventListener("load", function () {
-        document.getElementById("content").innerHTML = new Transaction({
-          "id": "0fb36507f2dba5e3aadd18284a62e6df480db770",
-          "block_id": "01ab612c927b1e5637e1b71948f6d54fc0cfa81b",
-          "prev_block_id": "01ab612b58f3a41f20a9b336028181d5d96d9d15",
-          "type": "sm_find_match",
-          "player": "smitop",
-          "data": "{\"team_hash\": \"4d470facfc07bf7c7fe515f01e810407\", \"ruleset\": \"Taking Sides\", \"match_type\": \"Ranked\", \"mana_cap\": 15, \"summoner_level\": 1}",
-          "success": true,
-          "error": null,
-          "block_num": 28008748,
-          "created_date": "2018-11-25T12:09:45.784Z",
-          "result": null,
-          "steem_price": "0.327729",
-          "sbd_price": "0.835209"
-        }).toHTML();
+        var updatePage = function () {
+          var name = document.getElementById("query").value;
+          name = name.trim();
+          if (name === "") document.getElementById("content").innerHTML = "";
+          fetch("https://steemmonsters.com/players/history?username=" + name + "&from_block=-1&limit=500").then(async function (result) {
+            var history = await result.json();
+            console.log(history);
+            let html = "";
+            history.forEach(function (item) {
+              html += new Transaction(item).toHTML();
+            });
+            document.getElementById("content").innerHTML = html;
+          });
+        }
+        document.getElementById("query").oninput = updatePage;
         document.getElementById("loader").style.display = "none";
       });
     </script>
@@ -209,11 +241,12 @@
       <h1>Steem Monsters Explorer</h1>
     </nav>
     <div id="usage">
-      Enter a Steem username, block number, purchase ID (starts with <span class="raw-data">P-</span>), booster pack ID (starts with <span class="raw-data">B-</span>), or battle ID...
+      Enter a Steem username<!--, block number, purchase ID (starts with <span class="raw-data">P-</span>), booster pack ID (starts with <span class="raw-data">B-</span>), or battle ID-->.
     </div>
     <input type="text" id="query" />
     <div id="loader">
     </div>
     <div id="content"></div>
+    By Smitop.
   </body>
 </html>
