@@ -62,15 +62,21 @@
       .transaction {
         background-color: #7eff88;
         border-radius: 10px;
-        height: 5em;
         width: 25em;
+        max-width: 75vw;
         border: 0.2em solid black;
         margin: 0 auto;
         text-align: left;
         padding: 1em;
       }
+      .error-tx {
+        text-decoration: line-through;
+      }
       .username {
         font-weight: bold;
+      }
+      .block-number {
+        float: right;
       }
       @keyframes loader-rotate { 
         from { 
@@ -155,10 +161,22 @@
           //original raw transaction
           this.raw = tx;
         }
+        typeString() {
+          var types = {
+            "sm_find_match": "started looking for a match",
+            "sm_open_pack": "opened a pack",
+            "sm_claim_reward": "claimed a reward",
+            "sm_team_reveal": "revaled their team"
+          };
+          if (types[this.type]) return types[this.type];
+          return '<span class="raw-data">' + this.type + "</span>";
+        }
         toHTML() {
           return `
-            <div class="transaction">
+            <div class="transaction${this.error ? " error-tx" : ""}" ${this.error ? 'title="This transaction was invalid."' : ""}>
               <span class="username">${this.player}</span>
+              ${this.typeString()}
+              <span class="block-number">${this.block}</span>
             </div>
           `;
         }
