@@ -192,7 +192,8 @@
             "sm_cancel_match": "stopped looking for a battle",
             "sm_open_all": "opened all of their booster packs",
             "sm_refresh_quest": "changed their daily quest",
-            "sm_card_award": "awarded cards"
+            "sm_card_award": "awarded cards",
+            "sm_battle": "battled"
           };
           console.log(this.type);
           console.log(this);
@@ -218,6 +219,15 @@
             return "opened all " + this.result.cards.length + " " + edition + " booster packs"
           } else if (this.type === "sm_combine_cards") {
             return "combined " + this.data.cards.length + " cards"; 
+          } else if (this.type === "sm_battle") {
+            if (this.data.action === "surrender") {
+              return "surrendered";
+            }
+            if (this.data.action === "claim_victory") {
+              return "won by default";
+            }
+            if (!this.result.details.team2) return console.warn("wut", this);
+            return "battled <span class='username'>" + this.result.details.team2.player + "</span>";
           } else if (this.type === "sm_combine_all") {
             var cardData = CARDS.filter(card=>card.id === this.data.card_detail_id)[0];
             var edition;
@@ -245,7 +255,7 @@
           return this.typeString();
         }
         toHTML() {
-          if ((this.type === "sm_team_reveal") || (this.type === "sm_find_match")) return "";
+          if ((this.type === "sm_submit_team") || (this.type === "sm_team_reveal") || (this.type === "sm_find_match")) return "";
           var date = new Date(this.date);
           return `
             <div class="transaction${this.error ? " error-tx" : ""}" ${this.error ? 'title="Error: ' + this.error + '"e' : ""}>
@@ -282,11 +292,29 @@
             console.log(history);
             let html = "";
             var elements = {};
+            var winningSummoners = {};
             history.forEach(function (item) {
               var id = Math.random().toString(36);
-              elements[id] = {id: id, tx: new Transaction(item)};
+              var tx = new Transaction(item);
+              elements[id] = {id: id, tx: tx};
+              if (tx.type === "sm_battle") {
+                //did we lose?
+                if ((tx.result.winner === name) || (tx.data.action === "surrender") || (tx.data.action === "claim_victory")) {
+                  //todo: do something
+                } else {
+                  console.log(tx);
+                  var otherTeam = tx.result.details.team1;
+                  if (!otherTeam)
+                  if (otherTeam.player === name) otherTeam = tx.result.details.team2;
+                  if (!winningSummoners[otherTeam.color]) winningSummoners[otherTeam.color] = 0;
+                  winningSummoners[otherTeam.color]++;
+                }
+              }
               html += '<span id="' + id + '">' + elements[id].tx.toHTML() + "</span>";
             });
+            html = `
+              Splinters that win against this user: <span class="raw-data">${JSON.stringify(winningSummoners)}</span>
+            ` + html;
             document.getElementById("loader").style.display = "none";
             document.getElementById("content").innerHTML = html;
             for (var item in elements) {
@@ -295,6 +323,10 @@
                 var pendingRetraction = null;
                 var showSimple = true;
                 element.element = document.getElementById(element.id);
+                if (element.element === null) {
+                  console.warn("weird", element);
+                  return;
+                }
                 element.element.addEventListener("mouseover", function () {
                   clearTimeout(pendingRetraction);
                   if (expanded) return;
