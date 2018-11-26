@@ -62,7 +62,7 @@
       .transaction {
         background-color: #7eff88;
         border-radius: 10px;
-        width: 30em;
+        width: 80vw;
         max-width: 75vw;
         border: 0.2em solid black;
         margin: 0 auto 1em auto;
@@ -231,31 +231,77 @@
         }
         toHTML() {
           if ((this.type === "sm_team_reveal") || (this.type === "sm_find_match")) return "";
+          var date = new Date(this.date);
           return `
             <div class="transaction${this.error ? " error-tx" : ""}" ${this.error ? 'title="Error: ' + this.error + '"e' : ""}>
               <span class="username">${this.player}</span>
               ${this.summary()}
-              <span class="block-number">${this.block}</span>
+              <span class="block-number">${date.toLocaleDateString()} ${date.toLocaleTimeString()}</span>
             </div>
           `;
         }
         toExpandedHTML() {
           //extra data about transaction
+          var date = new Date(this.date);
+          return `
+            <div class="transaction${this.error ? " error-tx" : ""}" ${this.error ? 'title="Error: ' + this.error + '"e' : ""}>
+              <span class="username">${this.player}</span>
+              ${this.summary()}
+              <div class="raw-data">${JSON.stringify(this.data)}</div>
+              <span class="block-number">${date.toLocaleDateString()} ${date.toLocaleTimeString()}</span>
+            </div>
+          `;
         }
       }
       window.addEventListener("load", function () {
         var updatePage = function () {
+          document.getElementById("loader").style.display = "block";
           var name = document.getElementById("query").value;
           name = name.trim();
-          if (name === "") document.getElementById("content").innerHTML = "";
+          if (name === "") {
+            document.getElementById("loader").style.display = "none";
+            return document.getElementById("content").innerHTML = "";
+          }
           fetch("https://steemmonsters.com/players/history?username=" + name + "&from_block=-1&limit=500").then(async function (result) {
             var history = await result.json();
             console.log(history);
             let html = "";
+            var elements = {};
             history.forEach(function (item) {
-              html += new Transaction(item).toHTML();
+              var id = Math.random().toString(36);
+              elements[id] = {id: id, tx: new Transaction(item)};
+              html += '<span id="' + id + '">' + elements[id].tx.toHTML() + "</span>";
             });
+            document.getElementById("loader").style.display = "none";
             document.getElementById("content").innerHTML = html;
+            for (var item in elements) {
+              (function (element) {
+                var expanded = false;
+                var pendingRetraction = null;
+                var showSimple = true;
+                element.element = document.getElementById(element.id);
+                element.element.addEventListener("mouseover", function () {
+                  clearTimeout(pendingRetraction);
+                  if (expanded) return;
+                  expanded = true;
+                  showSimple = false;
+                  this.innerHTML = element.tx.toExpandedHTML();
+                });
+                element.element.addEventListener("mouseout", function () {
+                  if (!expanded) return;
+                  expanded = false;
+                  var that = this;
+                  if (!showSimple) {
+                    pendingRetraction = setTimeout(function () {
+                      showSimple = true;
+                      that.innerHTML = element.tx.toHTML();
+                    }, 1000);
+                    return;
+                  }
+                  this.innerHTML = element.tx.toHTML();
+                });
+              })(elements[item])
+            }
           });
         }
         document.getElementById("query").oninput = updatePage;
