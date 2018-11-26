@@ -283,6 +283,8 @@
           document.getElementById("loader").style.display = "block";
           var name = document.getElementById("query").value;
           name = name.trim();
+          name = name.toLowerCase();
+          if (name.indexOf("@") === 0) name = name.split("@")[1];
           if (name === "") {
             document.getElementById("loader").style.display = "none";
             return document.getElementById("content").innerHTML = "";
