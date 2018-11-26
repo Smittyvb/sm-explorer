@@ -63,6 +63,7 @@
         background-color: #7eff88;
         border-radius: 10px;
         width: 80vw;
+        height: 2.5em;
         max-width: 75vw;
         border: 0.2em solid black;
         margin: 0 auto 1em auto;
@@ -203,6 +204,10 @@
             if (this.data.type === "quest") {
               return "claimed a daily quest reward";
             }
+          } else if (this.type === "sm_start_quest") {
+            return "started a daily quest: " + this.result.name;
+          } else if (this.type === "sm_combine_cards") {
+            return "combined " + this.data.cards.length + " cards"; 
           } else if (this.type === "sm_combine_all") {
             var cardData = CARDS.filter(card=>card.id === this.data.card_detail_id)[0];
             var edition;
