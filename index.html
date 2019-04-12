@@ -321,7 +321,7 @@
         updatePage = function () {
           document.getElementById("loader").style.display = "block";
           var name = document.getElementById("query").value;
-          if ((name.trim().length === 32) || (name.trim().length === 40) || (((name.trim().length === 35) || (name.trim().length === 43) && (name.trim().indexOf("sm_") === 0))) {
+          if ((name.trim().length === 32) || (name.trim().length === 40) || (((name.trim().length === 35) || (name.trim().length === 43)) && (name.trim().indexOf("sm_") === 0))) {
             fetch("https://api.steemmonsters.io/cards/trx_lookup?trx_id=" + name.trim()).then(async function (result) {
               const tx = new Transaction((await result.json()).trx_info);
               document.getElementById("loader").style.display = "none";
