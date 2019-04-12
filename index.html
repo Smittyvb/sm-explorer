@@ -209,7 +209,7 @@
               return "claimed a daily quest reward";
             }
           } else if (this.type === "sm_start_quest") {
-            return "started a daily quest: " + linkifyUsername(this.result.name);
+            return "started a daily quest: " + this.result.name;
           } else if (this.type === "sm_open_all") {
             var edition;
             if (this.result.edition === "0") {
