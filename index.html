@@ -180,11 +180,13 @@
           var types = {
             "sm_find_match": "started looking for a match",
             "sm_open_pack": "opened a pack",
+            "open_pack": "opened a pack",
             "sm_claim_reward": "claimed a reward",
             "sm_team_reveal": "revaled their team",
             "sm_combine_all": "combined cards",
             "sm_combine_cards": "combined cards",
             "sm_gift_packs": "gifted booster packs",
+            "gift_packs": "gifted booster packs",
             "sm_start_quest": "started a daily quest",
             "sm_sell_cards": "placed a sell order",
             "sm_cancel_sell": "cancelled a sell order",
@@ -201,7 +203,12 @@
             "sm_decline_challenge": "declined a challenge",
             "enter_tournament": "entered a tournament",
             "tournament_checkin": "checked in for a tournament",
-            "leave_tournament": "left a tournament"
+            "leave_tournament": "left a tournament",
+            "sm_tournament_payment": "received a tournament payment",
+            "create_tournament": "created a tournament",
+            "delegate_cards": "delegated cards",
+            "undelegate_cards": "undelegated cards",
+            "sm_convert_cards": "converted cards from alpha to beta"
           };
           console.log(this.type);
           console.log(this);
@@ -247,7 +254,7 @@
               edition = "promo";
             }
             return "combined all " + (this.data.gold ? "gold " : "") + edition + " " + cardData.name + "s";
-          } else if (this.type === "sm_gift_cards") {
+          } else if (this.type === "sm_gift_cards" || this.type === "gift_packs") {
             return "gifted " + this.data.cards.length + " card" + ((this.data.cards.length !== 1) ? "s" : "") + " to <span class='username'>" + linkify(this.data.to) + "</span>"
           } else if (this.type === "sm_gift_packs") {
             var edition;
