@@ -287,7 +287,7 @@
             <div class="transaction${this.error ? " error-tx" : ""}" ${this.error ? 'title="Error: ' + this.error + '"e' : ""}>
               <span class="username">${linkify(this.player)}</span>
               ${this.summary()}
-              <span class="block-number">${date.toLocaleDateString()} ${date.toLocaleTimeString()}</span>
+              <span class="block-number">${linkify(this.id, this.id.slice(0, 8))} ${date.toLocaleDateString()} ${date.toLocaleTimeString()}</span>
             </div>
           `;
         }
@@ -321,7 +321,7 @@
         updatePage = function () {
           document.getElementById("loader").style.display = "block";
           var name = document.getElementById("query").value;
-          if ((name.trim().length === 32) || ((name.trim().length === 35) && (name.trim().indexOf("sm_") === 0))) {
+          if ((name.trim().length === 32) || (name.trim().length === 40) || (((name.trim().length === 35) || (name.trim().length === 43) && (name.trim().indexOf("sm_") === 0))) {
             fetch("https://api.steemmonsters.io/cards/trx_lookup?trx_id=" + name.trim()).then(async function (result) {
               const tx = new Transaction((await result.json()).trx_info);
               document.getElementById("loader").style.display = "none";
