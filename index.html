@@ -299,7 +299,7 @@
               <span class="username">${linkify(this.player)}</span>
               ${this.summary()}
               <div class="raw-data">${JSON.stringify(this.data)}</div>
-              <span class="block-number">${date.toLocaleDateString()} ${date.toLocaleTimeString()}</span>
+              <span class="block-number">${linkify(this.id, this.id.slice(0, 8)}<br>${date.toLocaleDateString()} ${date.toLocaleTimeString()}</span>
             </div>
           `;
         }
