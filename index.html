@@ -268,14 +268,14 @@
             return "gifted " + this.data.qty + " " + edition + " pack" + ((this.data.qty !== 1) ? "s" : "") + " to <span class='username'>" + linkify(this.data.to) + "</span>";
           } else if (this.type === "open_pack") {
             var edition;
-            if (this.data.edition === "0") {
+            if (this.data.edition === 0) {
               edition = "alpha";
-            } else if (this.result.edition === "1") {
+            } else if (this.result.edition === 1) {
               edition = "beta";
             } else {
-              edition = "promo";
+              edition = "reward";
             }
-            return "opened " + this.data.qty + " " + edition + " booster packs"
+            return "opened a " + edition + " booster pack"
           }
           return this.typeString();
         }
