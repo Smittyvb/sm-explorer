@@ -307,7 +307,7 @@
             fetch("https://api.steemmonsters.io/cards/trx_lookup?trx_id=" + name.trim()).then(async function (result) {
               const tx = new Transaction((await result.json()).trx_info);
               document.getElementById("loader").style.display = "none";
-              document.getElementById("content").innerHTML = tx.toPageHTML;
+              document.getElementById("content").innerHTML = tx.toPageHTML();
             });
             return;
           }
