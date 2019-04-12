@@ -3,7 +3,7 @@
   <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>SM Explorer</title>
+    <title>SM explorer</title>
     <style>
       body {
         font-family: sans-serif;
@@ -289,7 +289,7 @@
             document.getElementById("loader").style.display = "none";
             return document.getElementById("content").innerHTML = "";
           }
-          fetch("https://steemmonsters.com/players/history?username=" + name + "&from_block=-1&limit=500").then(async function (result) {
+          fetch("https://api.steemmonsters.io/players/history?username=" + name + "&from_block=-1&limit=500").then(async function (result) {
             var history = await result.json();
             console.log(history);
             let html = "";
