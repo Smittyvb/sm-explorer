@@ -285,12 +285,32 @@
             </div>
           `;
         }
+        toPageHTML() {
+          //extra data about transaction
+          var date = new Date(this.date);
+          return `
+            <div class="transaction${this.error ? " error-tx" : ""}" ${this.error ? 'title="Error: ' + this.error + '"e' : ""}>
+              <span class="username">${linkifyUsername(this.player)}</span>
+              ${this.summary()}
+              <div class="raw-data">${JSON.stringify(this.data)}</div>
+              <span class="block-number">${date.toLocaleDateString()} ${date.toLocaleTimeString()}</span>
+            </div>
+          `;
+        }
       }
       var updatePage;
       window.addEventListener("load", function () {
         updatePage = function () {
           document.getElementById("loader").style.display = "block";
           var name = document.getElementById("query").value;
+          if ((name.trim().length === 40) || ((name.trim().length === 43) && (name.trim().indexOf("sm_") === 0))) {
+            fetch("https://api.steemmonsters.io/cards/trx_lookup=" + name.trim()).then(async function (result) {
+              const tx = new Transaction(await result.json());
+              document.getElementById("loader").style.display = "none";
+              document.getElementById("content").innerHTML = tx.toPageHTML;
+            });
+            return;
+          }
           name = name.trim();
           name = name.toLowerCase();
           if (name.indexOf("@") === 0) name = name.split("@")[1];
