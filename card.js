@@ -5,8 +5,7 @@ class Card {
     this.dataReq = dataReq;
     (async function () {
       //this gets run in the background
-      await dataReq;
-      const json = await dataReq.json();
+      const json = await (await dataReq).json();
       if (json[0].error) return console.error("Couldn't fetch card data for", id);
       this.cardData = json[0];
     })();
