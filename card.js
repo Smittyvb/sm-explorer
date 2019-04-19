@@ -12,13 +12,13 @@ class Card {
     })();
   }
   async toHTML() {
-    await dataReq;
+    await this.dataReq;
     return (this.cardData.gold ? "gold " : "") + this.cardData.details.name;
   }
   async toExpandedHTML() {
-    await dataReq;
+    await this.dataReq;
   }
   async toPageHTML() {
-    await dataReq;
+    await this.dataReq;
   }
 }
