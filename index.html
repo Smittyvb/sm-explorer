@@ -5,6 +5,395 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>SM explorer</title>
     <style>
+      .stat-mana img {
+  height: 50px;
+}
+
+.stat-magic img,
+.stat-ranged img,
+.stat-attack img,
+.stat-armor img,
+.stat-health img {
+  height: 52px;
+}
+
+.stat-speed img {
+  height: 43px;
+}
+
+.details-card .stat-mana img {
+  height: 75px;
+}
+.details-card .stat-magic img,
+.details-card .stat-attack img,
+.details-card .stat-armor img,
+.details-card .stat-health img,
+.details-card .stat-ranged img {
+  height: 70px;
+}
+
+.details-card .stat-speed img {
+  height: 56px;
+}
+
+.stat-mana {
+  position: absolute;
+  top: -280px;
+}
+
+.details-card .stat-mana {
+  top: -421px;
+}
+
+#gifts_dialog .details-card .stat-mana {
+  left: 23px;
+}
+
+.stat-magic {
+  position: absolute;
+  top: -199px;
+  left: -11px;
+}
+
+.stat-magic.second {
+	top: -242px;
+}
+
+.details-card .stat-magic {
+  top: -288px;
+  left: -13px;
+}
+
+.details-card .stat-magic.second {
+  top: -351px;
+  left: -13px;
+}
+
+.stat-ranged {
+  position: absolute;
+  top: -199px;
+  left: -11px;
+}
+
+.details-card .stat-ranged {
+  top: -288px;
+  left: -13px;
+}
+
+#gifts_dialog .details-card .stat-magic,
+#gifts_dialog .details-card .stat-ranged,
+#gifts_dialog .details-card .stat-attack {
+  left: 9px;
+}
+
+#gifts_dialog .details-card .stat-speed {
+  left: 16px;
+}
+
+.stat-attack {
+  position: absolute;
+  top: -199px;
+  left: -11px;
+}
+
+.details-card .stat-attack {
+  top: -288px;
+  left: -13px;
+}
+
+.stat-speed {
+  position: absolute;
+  top: -152px;
+  left: -6px;
+}
+
+.details-card .stat-speed {
+  top: -220px;
+  left: -6px;
+}
+
+.stat-armor {
+  position: absolute;
+  top: -199px;
+  left: 157px;
+}
+
+.details-card .stat-armor {
+  top: -288px;
+  left: 243px;
+}
+
+#gifts_dialog .details-card .stat-armor,
+#gifts_dialog .details-card .stat-health {
+  left: 265px;
+}
+
+.stat-health {
+  position: absolute;
+  top: -152px;
+  left: 157px;
+}
+
+.details-card .stat-health {
+  top: -220px;
+  left: 243px;
+}
+
+.stat-text-mana {
+  position: absolute;
+  top: 4px;
+  width: 46px;
+  text-align: center;
+  color: white;
+  font-size: 3rem;
+  font-family: nanami-heavy;
+  -webkit-text-stroke: 1.5px black;
+  text-shadow: 2px 2px black;
+}
+
+.details-card .stat-text-mana {
+  top: 5px;
+  left: 5px;
+  width: 59px;
+  font-size: 4.5rem;
+  -webkit-text-stroke: 2px black;
+}
+
+.stat-text {
+  position: absolute;
+  top: 6px;
+  left: 8px;
+  color: white;
+  font-size: 27px;
+  width: 30px;
+  text-align: center;
+  font-family: nanami-heavy;
+  -webkit-text-stroke: 1.5px black;
+  text-shadow: 2px 2px black;
+}
+
+.stat-speed .stat-text {
+  left: 2px;
+  top: 4px;
+}
+
+.details-card .stat-text {
+  top: 9px;
+  left: 9px;
+  width: 44px;
+  font-size: 36px;
+  text-align: center;
+  -webkit-text-stroke: 2px black;
+}
+
+.details-card .stat-speed .stat-text {
+  left: 1px;
+  top: 6px;
+}
+
+.summoner-stats {
+  position: absolute;
+  top: -69px;
+  display: flex;
+  width: 163px;
+  left: 19px;
+  align-items: center;
+  justify-content: center;
+}
+
+.summoner-stats.disabled, .abilities .disabled {
+	filter: grayscale(100%);
+	opacity: 0.5;
+}
+
+.card.beta .summoner-stats,
+.card_back.beta .summoner-stats {
+  top: -58px;
+}
+
+.stat-magic-summoner img,
+.stat-ranged-summoner img,
+.stat-attack-summoner img,
+.stat-armor-summoner img,
+.stat-health-summoner img {
+  height: 52px;
+}
+
+.stat-speed-summoner img {
+  height: 43px;
+}
+
+.stat-magic-summoner,
+.stat-ranged-summoner,
+.stat-attack-summoner,
+.stat-armor-summoner,
+.stat-health-summoner,
+.stat-speed-summoner {
+  margin: 0 5px;
+}
+
+.summoner-stats .stat-text {
+  position: relative;
+  top: -44px;
+  left: 1px;
+}
+
+.summoner-stats .stat-speed-summoner .stat-text {
+  top: -39px;
+  left: -7px;
+}
+
+.details-card .summoner-stats {
+  top: -108px;
+  width: 244px;
+  left: 28px;
+}
+
+#gifts_dialog .details-card .summoner-stats {
+	width: 286px;
+}
+
+.details-card.beta .summoner-stats {
+  top: -82px;
+}
+
+.details-card .stat-magic-summoner img,
+.details-card .stat-ranged-summoner img,
+.details-card .stat-attack-summoner img,
+.details-card .stat-armor-summoner img,
+.details-card .stat-health-summoner img {
+  height: 70px;
+}
+
+.details-card .stat-speed-summoner img {
+  height: 56px;
+}
+
+.details-card .summoner-stats .stat-text {
+  top: -61px;
+  left: 0px;
+}
+
+.details-card .summoner-stats .stat-speed-summoner .stat-text {
+  top: -52px;
+  left: -10px;
+}
+
+.abilities {
+  position: absolute;
+  top: -69px;
+  left: 19px;
+  width: 162px;
+  height: 54px;
+  padding-top: 5px;
+}
+
+.card.beta .abilities,
+.card_back.beta .abilities {
+  top: -55px;
+}
+
+.details-card .abilities {
+  top: -108px;
+  left: 28px;
+  width: 243px;
+  height: 80px;
+	padding-top: 10px;
+	text-align: center;
+}
+
+.details-card.beta .abilities {
+  top: -86px;
+}
+
+#gifts_dialog .details-card .abilities {
+  left: 59px;
+}
+
+#gifts_dialog .details-card.beta .abilities {
+  left: 49px;
+}
+
+.abilities img {
+  width: 40px;
+}
+
+.abilities.ability-count-5 img {
+	width: 28px;
+}
+
+.abilities.ability-count-4 img {
+	width: 36px;
+}
+
+.details-card .abilities img {
+  width: 60px;
+}
+
+.details-card .abilities.ability-count-5 img {
+	width: 40px;
+}
+
+.details-card .abilities.ability-count-4 img {
+	width: 52px;
+}
+
+.market-price {
+	height: 34px;
+	width: 100%;
+	background-color: rgba(0,0,0,0.8);
+	color: #fcc366;
+	display: grid;
+	grid-template-columns: auto auto;
+	align-items: stretch;
+	border-radius: 5px 5px 0 0;
+}
+
+.market-price__items {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.card_market {
+  height: 310px;
+}
+
+.card-detail-container {
+  height: 38px;
+  margin: 5px 0;
+  cursor: pointer;
+  border: 1px solid transparent;
+}
+
+.card-detail-container.selected {
+  border: 1px solid #fcc366;
+}
+
+.card-detail-info {
+  background-color: #002a30;
+  color: white;
+  font-family: nanami-extralight;
+  font-size: 1.7rem;
+  text-align: left;
+  padding: 5px;
+  height: 30px;
+}
+
+.card-detail-container.selected .card-detail-info {
+  background-color: #2d6e7f;
+}
+
+.card-detail-container .card-level {
+  top: 0;
+  left: 0;
+  width: 100%;
+  background-color: #370300;
+}
+
+.card-detail-container .card-detail-xp .relative-position {
+  width: 100%;
+}
       body {
         font-family: sans-serif;
         margin: 0;
