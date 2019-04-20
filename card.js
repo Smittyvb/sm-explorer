@@ -3,7 +3,7 @@ class Card {
     this.id = id;
     const dataReq = fetch("https://api.steemmonsters.io/cards/find?ids=" + id);
     let resolve;
-    this.ready = new Promise(resolve => resolve = resolve);
+    this.ready = new Promise(r => resolve = r);
     var that = this;
     (async function () {
       //this gets run in the background
