@@ -117,7 +117,7 @@ class Card {
   <div class="relative-position">
   <div class="stat-mana">
     <img src="https://s3.amazonaws.com/steemmonsters/website/stats/stat_bg_mana.png">
-    <div class="stat-text-mana"><%= stats.mana %></div>
+    <div class="stat-text-mana">${stats.mana}</div>
   </div>
 
   ${ details.type == 'Monster' ? `
