@@ -424,14 +424,14 @@ class Card {
         </div>
       </div>
       <div class="relative-position">
-        <div class="card-name <%= this.cardData.gold ? 'foil' : details.color.toLowerCase() %>">
+        <div class="card-name ${this.cardData.gold ? 'foil' : details.color.toLowerCase()}">
           <% if(this.cardData.gold && (this.cardData.edition == 0 || this.cardData.edition == 2)) { %>
           <img src="https://s3.amazonaws.com/steemmonsters/website/gold_name_bg.png" />
           <% } %>
         </div>
-        <div class="card-name-text <%= this.cardData.gold ? 'foil' : '' %>">
-          <div class="card-name-name <%= (details.name.length >= 19) ? 'xxs' : ((details.name.length >= 17) ? 'xs' : ((details.name.length >= 15) ? 'sm' : '')) %>"><%= details.name %></div>
-          <div class="card-name-level" style="<%= (level_info.level >= 10) ? 'font-size: 90%' : '' %>">&#x2605 <%= level_info.level %></div>
+        <div class="card-name-text ${this.cardData.gold ? 'foil' : ''}">
+          <div class="card-name-name ${(details.name.length >= 19) ? 'xxs' : ((details.name.length >= 17) ? 'xs' : ((details.name.length >= 15) ? 'sm' : ''))}">${details.name}</div>
+          <div class="card-name-level" style="${(level_info.level >= 10) ? 'font-size: 90%' : ''}">&#x2605 ${level_info.level}</div>
         </div>
       </div>
     </div>
