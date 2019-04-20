@@ -106,6 +106,10 @@ class Card {
     var level_info = Card.getCardLevelInfo(this.cardData);
     var stats = Card.getCardStats(this.cardData); 
     var details = this.cardData.details;
+    let abilities = "";
+    for(var i = 0; i < stats.abilities.length; i++) { 
+      abilities += `<img class="ability-${i}" src="https://s3.amazonaws.com/steemmonsters/website/abilities/ability_${stats.abilities[i].toLowerCase().replace(' ', '-')}.png" data-toggle="tooltip" data-placement="bottom" title="${stats.abilities[i]}" />`;
+    }
     return `
 <div style="cursor: default;" id="card_${this.cardData.id}">
   <img src="${Card.getImageUrl({ card_detail_id: this.cardData.id, gold: this.cardData.gold, edition: this.cardData.edition })}" class="card-img" card_detail_id="${this.cardData.id} %>"/>
@@ -147,7 +151,7 @@ class Card {
       <div class="stat-text">${stats.speed}</div>
     </div>
 
-    ${stats.armor > 0 && data.ruleset != 'Unprotected' ? `
+    ${stats.armor > 0 ? `
       <div class="stat-armor">
         <img src="https://s3.amazonaws.com/steemmonsters/website/stats/defense.png">
         <div class="stat-text">${stats.armor}</div>
@@ -159,19 +163,9 @@ class Card {
       <div class="stat-text">${stats.health}</div>
     </div>
 
-    <div class="abilities ability-count-${stats.abilities.length}">
-      <% for(var i = 0; i < stats.abilities.length; i++) { 
-              if(data.ruleset == 'Fog of War' && (stats.abilities[i] == 'Sneak' || stats.abilities[i] == 'Snipe'))
-                continue;
-
-              if(data.ruleset == 'Healed Out' && (stats.abilities[i] == 'Heal' || stats.abilities[i] == 'Tank Heal'))
-                continue;
-          %>
-      <img class="ability-<%= i %> <%= data.ruleset == 'Back to Basics' ? 'disabled' : '' %>" src="https://s3.amazonaws.com/steemmonsters/website/abilities/ability_<%= stats.abilities[i].toLowerCase().replace(' ', '-') %>.png" data-toggle="tooltip" data-placement="bottom" title="<%= stats.abilities[i] %>" />
-      <% } %>
-    </div>
+    <div class="abilities ability-count-${stats.abilities.length}">${abilities}</div>
   ` : ""} ${ details.type == 'Summoner' ? `
-    <div class="summoner-stats ${data.ruleset == 'Silenced Summoners' ? 'disabled' : ''}">
+    <div class="summoner-stats">
       ${stats.attack != 0 ? `
         <div class="stat-attack-summoner">
           <img src="https://s3.amazonaws.com/steemmonsters/website/stats/melee-attack.png">
@@ -228,7 +222,17 @@ class Card {
     ` : "" }
   </div>
 </div>
-  <%= SM.ShowComponent('card_name', data) %>
+  <div class="relative-position">
+  <div class="card-name <%= this.cardData.gold ? 'foil' : details.color.toLowerCase() %>">
+		<% if(this.cardData.gold && (this.cardData.edition == 0 || this.cardData.edition == 2)) { %>
+			<img src="https://s3.amazonaws.com/steemmonsters/website/gold_name_bg.png" />
+		<% } %>
+  </div>
+  <div class="card-name-text <%= this.cardData.gold ? 'foil' : '' %>">
+		<div class="card-name-name <%= (details.name.length >= 19) ? 'xxs' : ((details.name.length >= 17) ? 'xs' : ((details.name.length >= 15) ? 'sm' : '')) %>"><%= details.name %></div>
+		<div class="card-name-level" style="<%= (level_info.level >= 10) ? 'font-size: 90%' : '' %>">&#x2605 <%= level_info.level %></div>
+  </div>
+</div>
 </div>
     `;
   }
