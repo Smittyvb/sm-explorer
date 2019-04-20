@@ -121,38 +121,38 @@ class Card {
   </div>
 
   ${ details.type == 'Monster' ? `
-    <% if(stats.attack > 0) { %>
-    <div class="stat-attack">
-      <img src="https://s3.amazonaws.com/steemmonsters/website/stats/melee-attack.png">
-      <div class="stat-text"><%= stats.attack %></div>
-    </div>
-    <% } %>
+    ${stats.attack > 0 ? `
+      <div class="stat-attack">
+        <img src="https://s3.amazonaws.com/steemmonsters/website/stats/melee-attack.png">
+        <div class="stat-text"><%= stats.attack %></div>
+      </div>
+    ` : ""}
 
-    <% if(stats.ranged > 0) { %>
-    <div class="stat-ranged <%= stats.attack > 0 ? 'second' : '' %>">
-      <img src="https://s3.amazonaws.com/steemmonsters/website/stats/ranged-attack.png">
-      <div class="stat-text"><%= stats.ranged %></div>
-    </div>
-    <% } %>
+    ${stats.ranged > 0 ? `
+      <div class="stat-ranged <%= stats.attack > 0 ? 'second' : '' %>">
+        <img src="https://s3.amazonaws.com/steemmonsters/website/stats/ranged-attack.png">
+        <div class="stat-text"><%= stats.ranged %></div>
+      </div>
+    ` : ""}
 
-    <% if(stats.magic > 0) { %>
-    <div class="stat-magic <%= stats.attack > 0 || stats.ranged > 0 ? 'second' : '' %>">
-      <img src="https://s3.amazonaws.com/steemmonsters/website/stats/magic-attack.png">
-      <div class="stat-text"><%= stats.magic %></div>
-    </div>
-    <% } %>
+    ${stats.magic > 0 ? `
+      <div class="stat-magic <%= stats.attack > 0 || stats.ranged > 0 ? 'second' : '' %>">
+        <img src="https://s3.amazonaws.com/steemmonsters/website/stats/magic-attack.png">
+        <div class="stat-text"><%= stats.magic %></div>
+      </div>
+    ` : ""}
 
     <div class="stat-speed">
       <img src="https://s3.amazonaws.com/steemmonsters/website/stats/speed.png">
       <div class="stat-text"><%= stats.speed %></div>
     </div>
 
-    <% if(stats.armor > 0 && data.ruleset != 'Unprotected') { %>
-    <div class="stat-armor">
-      <img src="https://s3.amazonaws.com/steemmonsters/website/stats/defense.png">
-      <div class="stat-text"><%= stats.armor %></div>
-    </div>
-    <% } %>
+    ${stats.armor > 0 && data.ruleset != 'Unprotected' ? `
+      <div class="stat-armor">
+        <img src="https://s3.amazonaws.com/steemmonsters/website/stats/defense.png">
+        <div class="stat-text"><%= stats.armor %></div>
+      </div>
+    ` : ""}
 
     <div class="stat-health">
       <img src="https://s3.amazonaws.com/steemmonsters/website/stats/health.png">
@@ -172,59 +172,59 @@ class Card {
     </div>
   ` : ""} ${ details.type == 'Summoner' ? `
     <div class="summoner-stats <%= data.ruleset == 'Silenced Summoners' ? 'disabled' : '' %>">
-      <% if(stats.attack != 0) { %>
-      <div class="stat-attack-summoner">
-        <img src="https://s3.amazonaws.com/steemmonsters/website/stats/melee-attack.png">
-        <div class="stat-text" data-toggle="tooltip" data-placement="bottom" title="<%= (stats.attack > 0) ? 'All friendly Melee Attack Monsters have +' + stats.attack + ' Melee Attack' : 'All enemy Melee Attack Monsters have ' + stats.attack + ' Melee Attack' %>">
-          <%= (stats.attack > 0 ? '+' : '') + stats.attack %>
+      ${stats.attack != 0)  ? `
+        <div class="stat-attack-summoner">
+          <img src="https://s3.amazonaws.com/steemmonsters/website/stats/melee-attack.png">
+          <div class="stat-text" data-toggle="tooltip" data-placement="bottom" title="<%= (stats.attack > 0) ? 'All friendly Melee Attack Monsters have +' + stats.attack + ' Melee Attack' : 'All enemy Melee Attack Monsters have ' + stats.attack + ' Melee Attack' %>">
+            <%= (stats.attack > 0 ? '+' : '') + stats.attack %>
+          </div>
         </div>
-      </div>
-      <% } %>
+      ` : ""}
 
-      <% if(stats.ranged != 0) { %>
-      <div class="stat-ranged-summoner">
-        <img src="https://s3.amazonaws.com/steemmonsters/website/stats/ranged-attack.png">
-        <div class="stat-text" data-toggle="tooltip" data-placement="bottom" title="<%= (stats.ranged > 0) ? 'All friendly Ranged Attack Monsters have +' + stats.ranged + ' Ranged Attack' : 'All enemy Ranged Attack Monsters have ' + stats.ranged + ' Ranged Attack' %>">
-          <%= (stats.ranged > 0 ? '+' : '') + stats.ranged %>
+      ${stats.ranged != 0)  ? `
+        <div class="stat-ranged-summoner">
+          <img src="https://s3.amazonaws.com/steemmonsters/website/stats/ranged-attack.png">
+          <div class="stat-text" data-toggle="tooltip" data-placement="bottom" title="<%= (stats.ranged > 0) ? 'All friendly Ranged Attack Monsters have +' + stats.ranged + ' Ranged Attack' : 'All enemy Ranged Attack Monsters have ' + stats.ranged + ' Ranged Attack' %>">
+            <%= (stats.ranged > 0 ? '+' : '') + stats.ranged %>
+          </div>
         </div>
-      </div>
-      <% } %>
+      ` : ""}
 
-      <% if(stats.magic != 0) { %>
-      <div class="stat-magic-summoner">
-        <img src="https://s3.amazonaws.com/steemmonsters/website/stats/magic-attack.svg">
-        <div class="stat-text" data-toggle="tooltip" data-placement="bottom" title="<%= (stats.magic > 0) ? 'All friendly Magic Attack Monsters have +' + stats.magic + ' Magic Attack' : 'All enemy Magic Attack Monsters have ' + stats.magic + ' Magic Attack' %>">
-          <%= (stats.magic > 0 ? '+' : '') + stats.magic %>
+      ${stats.magic != 0 ? `
+        <div class="stat-magic-summoner">
+          <img src="https://s3.amazonaws.com/steemmonsters/website/stats/magic-attack.svg">
+          <div class="stat-text" data-toggle="tooltip" data-placement="bottom" title="<%= (stats.magic > 0) ? 'All friendly Magic Attack Monsters have +' + stats.magic + ' Magic Attack' : 'All enemy Magic Attack Monsters have ' + stats.magic + ' Magic Attack' %>">
+            <%= (stats.magic > 0 ? '+' : '') + stats.magic %>
+          </div>
         </div>
-      </div>
-      <% } %>
+      ` : ""}
 
-      <% if(stats.speed != 0) { %>
-      <div class="stat-speed-summoner">
-        <img src="https://s3.amazonaws.com/steemmonsters/website/stats/speed.png">
-        <div class="stat-text" data-toggle="tooltip" data-placement="bottom" title="<%= (stats.speed > 0) ? 'All friendly Monsters have +' + stats.speed + ' Speed' : 'All enemy Monsters have ' + stats.speed + ' Speed' %>">
-          <%= (stats.speed > 0 ? '+' : '') + stats.speed %>
+      ${stats.speed != 0 ? `
+        <div class="stat-speed-summoner">
+          <img src="https://s3.amazonaws.com/steemmonsters/website/stats/speed.png">
+          <div class="stat-text" data-toggle="tooltip" data-placement="bottom" title="<%= (stats.speed > 0) ? 'All friendly Monsters have +' + stats.speed + ' Speed' : 'All enemy Monsters have ' + stats.speed + ' Speed' %>">
+            <%= (stats.speed > 0 ? '+' : '') + stats.speed %>
+          </div>
         </div>
-      </div>
-      <% } %>
+      ` : ""}
 
-      <% if(stats.armor != 0) { %>
-      <div class="stat-armor-summoner">
-        <img src="https://s3.amazonaws.com/steemmonsters/website/stats/defense.png">
-        <div class="stat-text" data-toggle="tooltip" data-placement="bottom" title="<%= (stats.armor > 0) ? 'All friendly Monsters have +' + stats.armor + ' Armor' : 'All enemy Monsters have ' + stats.armor + ' Armor' %>">
-          <%= (stats.armor > 0 ? '+' : '') + stats.armor %>
+      ${stats.armor != 0)  ? `
+        <div class="stat-armor-summoner">
+          <img src="https://s3.amazonaws.com/steemmonsters/website/stats/defense.png">
+          <div class="stat-text" data-toggle="tooltip" data-placement="bottom" title="<%= (stats.armor > 0) ? 'All friendly Monsters have +' + stats.armor + ' Armor' : 'All enemy Monsters have ' + stats.armor + ' Armor' %>">
+            <%= (stats.armor > 0 ? '+' : '') + stats.armor %>
+          </div>
         </div>
-      </div>
-      <% } %>
+      ` : ""}
 
-      <% if(stats.health != 0) { %>
-      <div class="stat-health-summoner">
-        <img src="https://s3.amazonaws.com/steemmonsters/website/stats/health.png">
-        <div class="stat-text" data-toggle="tooltip" data-placement="bottom" title="<%= (stats.health > 0) ? 'All friendly Monsters have +' + stats.health + ' Health' : 'All enemy Monsters have ' + stats.health + ' Health' %>">
-          <%= (stats.health > 0 ? '+' : '') + stats.health %>
+      ${stats.health != 0) ? `
+        <div class="stat-health-summoner">
+          <img src="https://s3.amazonaws.com/steemmonsters/website/stats/health.png">
+          <div class="stat-text" data-toggle="tooltip" data-placement="bottom" title="<%= (stats.health > 0) ? 'All friendly Monsters have +' + stats.health + ' Health' : 'All enemy Monsters have ' + stats.health + ' Health' %>">
+            <%= (stats.health > 0 ? '+' : '') + stats.health %>
+          </div>
         </div>
-      </div>
-    ` : "" }
+      ` : "" }
   </div>
 </div>
   <%= SM.ShowComponent('card_name', data) %>
