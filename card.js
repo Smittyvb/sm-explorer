@@ -104,7 +104,7 @@ class Card {
 
   async cardHTML() {
     var level_info = Card.getCardLevelInfo(this.cardData);
-    var stats = Card.GetCardStats(this.cardData); 
+    var stats = Card.getCardStats(this.cardData); 
     var details = this.cardData.details;
     return `
 <div style="cursor: default;" id="card_${this.cardData.id}">
