@@ -315,7 +315,7 @@ class Card {
     }
     return `
     <div style="cursor: default;" id="card_${this.cardData.id}">
-      <img src="${Card.getImageUrl({ card_detail_id: this.cardData.id, gold: this.cardData.gold, edition: this.cardData.edition })}" class="card-img" card_detail_id="${this.cardData.id} %>" />
+      <img src="${Card.getImageUrl(this.cardData)}" class="card-img" card_detail_id="${this.cardData.id}" />
       <div class="relative-position">
         <div class="card-level ${this.cardData.gold ? 'gold' : '' }">
           <div class="card-level-progress" style="width: ${((level_info.xp_needed > 0) ? level_info.xp_to_next_level / level_info.xp_needed * 100 : 100).toFixed(0)}%;"></div>
@@ -427,9 +427,9 @@ class Card {
       </div>
       <div class="relative-position">
         <div class="card-name ${this.cardData.gold ? 'foil' : details.color.toLowerCase()}">
-          <% if(this.cardData.gold && (this.cardData.edition == 0 || this.cardData.edition == 2)) { %>
-          <img src="https://s3.amazonaws.com/steemmonsters/website/gold_name_bg.png" />
-          <% } %>
+          ${ this.cardData.gold && (this.cardData.edition == 0 || this.cardData.edition == 2)) ? `
+            <img src="https://s3.amazonaws.com/steemmonsters/website/gold_name_bg.png" />
+          ` : ""}
         </div>
         <div class="card-name-text ${this.cardData.gold ? 'foil' : ''}">
           <div class="card-name-name ${(details.name.length >= 19) ? 'xxs' : ((details.name.length >= 17) ? 'xs' : ((details.name.length >= 15) ? 'sm' : ''))}">${details.name}</div>
