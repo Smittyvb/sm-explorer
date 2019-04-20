@@ -306,6 +306,8 @@ class Card {
     var level_info = Card.getCardLevelInfo(this.cardData);
     var stats = Card.getCardStats(this.cardData);
     var details = this.cardData.details;
+    this.cardData.id = this.cardData.card_detail_id;
+    details.card_detail_id = this.cardData.card_detail_id;
     let abilities = "";
     for (var i = 0; i <
       stats.abilities.length; i++) {
