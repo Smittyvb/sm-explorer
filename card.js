@@ -427,7 +427,7 @@ class Card {
       </div>
       <div class="relative-position">
         <div class="card-name ${this.cardData.gold ? 'foil' : details.color.toLowerCase()}">
-          ${ this.cardData.gold && (this.cardData.edition == 0 || this.cardData.edition == 2)) ? `
+          ${ this.cardData.gold && (this.cardData.edition == 0 || this.cardData.edition == 2) ? `
             <img src="https://s3.amazonaws.com/steemmonsters/website/gold_name_bg.png" />
           ` : ""}
         </div>
