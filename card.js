@@ -208,7 +208,7 @@ class Card {
         </div>
       ` : ""}
 
-      ${stats.armor != 0)  ? `
+      ${stats.armor != 0 ? `
         <div class="stat-armor-summoner">
           <img src="https://s3.amazonaws.com/steemmonsters/website/stats/defense.png">
           <div class="stat-text" data-toggle="tooltip" data-placement="bottom" title="<%= (stats.armor > 0) ? 'All friendly Monsters have +' + stats.armor + ' Armor' : 'All enemy Monsters have ' + stats.armor + ' Armor' %>">
@@ -217,7 +217,7 @@ class Card {
         </div>
       ` : ""}
 
-      ${stats.health != 0) ? `
+      ${stats.health != 0 ? `
         <div class="stat-health-summoner">
           <img src="https://s3.amazonaws.com/steemmonsters/website/stats/health.png">
           <div class="stat-text" data-toggle="tooltip" data-placement="bottom" title="<%= (stats.health > 0) ? 'All friendly Monsters have +' + stats.health + ' Health' : 'All enemy Monsters have ' + stats.health + ' Health' %>">
