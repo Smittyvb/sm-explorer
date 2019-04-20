@@ -14,15 +14,15 @@ class Card {
     })();
   }
   static getImageUrl(card) {
-		var details = card.details;
-		
-		if (!details)
-			return null;
+    var details = card.details;
+
+    if (!details)
+    return null;
     
     let betaCardUrl = "https://s3.amazonaws.com/steemmonsters/cards_beta/";
     let otherCardUrl = "https://s3.amazonaws.com/steemmonsters/cards_v2.2/";
 
-		return ((card.edition == 1 || card.edition == 3) ? betaCardUrl : Config.otherCardUrl) + details.name + (card.gold ? '_gold' : '') + '.png';
+    return ((card.edition == 1 || card.edition == 3) ? betaCardUrl : Config.otherCardUrl) + details.name + (card.gold ? '_gold' : '') + '.png';
 	}
   async cardHTML() {
     return `
