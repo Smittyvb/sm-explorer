@@ -319,14 +319,14 @@
       }
       var updatePage;
       window.addEventListener("load", function () {
-        updatePage = function () {
+        updatePage = async function () {
           document.getElementById("loader").style.display = "block";
           var name = document.getElementById("query").value;
           if (name.trim().match(/^(C|G)([1,2,3]-([0-9][0-9]?[0-9]?))?-[A-Z0-9]{10}$/)) {
             //card ID
             const card = new Card(name.trim());
+            document.getElementById("content").innerHTML = await card.toHTML();
             document.getElementById("loader").style.display = "none";
-            document.getElementById("content").innerHTML = card.toHTML();
             return;
           }
           if ((name.trim().length === 32) || (name.trim().length === 40) || (((name.trim().length === 35) || (name.trim().length === 43)) && (name.trim().indexOf("sm_") === 0))) {
