@@ -225,6 +225,7 @@ class Card {
           </div>
         </div>
       ` : "" }
+    ` : "" }
   </div>
 </div>
   <%= SM.ShowComponent('card_name', data) %>
