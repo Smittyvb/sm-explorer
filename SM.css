@@ -1,36 +1,36 @@
 @font-face {
   font-family: nanami-extralight;
-  src: url(fonts/nanami-extralight-webfont.woff);
+  src: url(https://steemmonsters.com/fonts/nanami-extralight-webfont.woff);
 }
 
 @font-face {
   font-family: nanami-light;
-  src: url(fonts/nanami-light-webfont.woff);
+  src: url(https://steemmonsters.com/fonts/nanami-light-webfont.woff);
 }
 
 @font-face {
   font-family: ruba;
-  src: url(fonts/ruba_oblique-webfont.woff);
+  src: url(https://steemmonsters.com/fonts/ruba_oblique-webfont.woff);
 }
 
 @font-face {
   font-family: nanami-heavy;
-  src: url(fonts/nanami-heavyoblique-webfont.woff);
+  src: url(https://steemmonsters.com/fonts/nanami-heavyoblique-webfont.woff);
 }
 
 @font-face {
   font-family: nanami-bold;
-  src: url(fonts/nanami-boldoblique-webfont.woff);
+  src: url(https://steemmonsters.com/fonts/nanami-boldoblique-webfont.woff);
 }
 
 @font-face {
   font-family: nanami-bold-reg;
-  src: url(fonts/nanami-bold-webfont.woff);
+  src: url(https://steemmonsters.com/fonts/nanami-bold-webfont.woff);
 }
 
 @font-face {
   font-family: 'OpenSans';
-  src: url(fonts/Open_Sans/OpenSans-Regular.ttf);
+  src: url(https://steemmonsters.com/fonts/Open_Sans/OpenSans-Regular.ttf);
 }
 
 @media (max-width: 991px) {
