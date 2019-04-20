@@ -181,7 +181,7 @@ class Card {
         </div>
       ` : ""}
 
-      ${stats.ranged != 0)  ? `
+      ${stats.ranged != 0 ? `
         <div class="stat-ranged-summoner">
           <img src="https://s3.amazonaws.com/steemmonsters/website/stats/ranged-attack.png">
           <div class="stat-text" data-toggle="tooltip" data-placement="bottom" title="<%= (stats.ranged > 0) ? 'All friendly Ranged Attack Monsters have +' + stats.ranged + ' Ranged Attack' : 'All enemy Ranged Attack Monsters have ' + stats.ranged + ' Ranged Attack' %>">
