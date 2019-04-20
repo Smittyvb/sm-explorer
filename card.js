@@ -172,7 +172,7 @@ class Card {
     </div>
   ` : ""} ${ details.type == 'Summoner' ? `
     <div class="summoner-stats <%= data.ruleset == 'Silenced Summoners' ? 'disabled' : '' %>">
-      ${stats.attack != 0)  ? `
+      ${stats.attack != 0 ? `
         <div class="stat-attack-summoner">
           <img src="https://s3.amazonaws.com/steemmonsters/website/stats/melee-attack.png">
           <div class="stat-text" data-toggle="tooltip" data-placement="bottom" title="<%= (stats.attack > 0) ? 'All friendly Melee Attack Monsters have +' + stats.attack + ' Melee Attack' : 'All enemy Melee Attack Monsters have ' + stats.attack + ' Melee Attack' %>">
