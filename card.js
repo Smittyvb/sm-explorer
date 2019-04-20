@@ -25,7 +25,7 @@ class Card {
 
     return ((card.edition == 1 || card.edition == 3) ? betaCardUrl : Config.otherCardUrl) + details.name + (card.gold ? '_gold' : '') + '.png';
   }
-  static getCardLevelInfo: function(card) {
+  static getCardLevelInfo(card) {
     var details = card.details;
     var levels = settings.xp_levels[details.rarity - 1];
     var level = 0;
@@ -64,8 +64,48 @@ class Card {
       cards_needed: cards_needed
     };
   }
+
+  static getCardStats(card) {
+    var level = Card.GetCardLevelInfo(card).level;
+    var details = card.details;
+    var stats = details.stats;
+
+    if (!stats)
+      return {
+        mana: 0,
+        attack: 0,
+        magic: 0,
+        armor: 0,
+        health: 0,
+        speed: 0,
+        abilities: [],
+        level: 1,
+      };
+
+    if (details.type == 'Summoner')
+      return Object.assign({ abilities: [], level: level }, stats);
+
+    var abilities = [];
+    for (var i = 0; i < level; i++)
+      stats.abilities[i].filter(a => a != '').forEach(a => abilities.push(a));
+
+    return {
+      mana: stats.mana[level - 1],
+      attack: stats.attack[level - 1],
+      ranged: stats.ranged ? stats.ranged[level - 1] : 0,
+      magic: stats.magic[level - 1],
+      armor: stats.armor[level - 1],
+      health: stats.health[level - 1],
+      speed: stats.speed[level - 1],
+      abilities: abilities,
+      level: level,
+    };
+  }
+
   async cardHTML() {
-    var level_info = Card.getCardLevelInfo(data);
+    var level_info = Card.getCardLevelInfo(this.cardData);
+    var stats = Card.GetCardStats(this.cardData); 
+    var details = this.cardData.details;
     return `
 <div style="cursor: default;" id="card_${this.cardData.id}">
   <img src="${Card.getImageUrl({ card_detail_id: this.cardData.id, gold: this.cardData.gold, edition: this.cardData.edition })}" class="card-img" card_detail_id="${this.cardData.id} %>"/>
@@ -74,7 +114,119 @@ class Card {
       <div class="card-level-progress" style="width: ${((level_info.xp_needed > 0) ? level_info.xp_to_next_level / level_info.xp_needed * 100 : 100).toFixed(0)}%;"></div>
     </div>
   </div>
-  <%= SM.ShowComponent('stats', data) %>		
+  <div class="relative-position">
+  <div class="stat-mana">
+    <img src="https://s3.amazonaws.com/steemmonsters/website/stats/stat_bg_mana.png">
+    <div class="stat-text-mana"><%= stats.mana %></div>
+  </div>
+
+  ${ details.type == 'Monster' ? `
+    <% if(stats.attack > 0) { %>
+    <div class="stat-attack">
+      <img src="https://s3.amazonaws.com/steemmonsters/website/stats/melee-attack.png">
+      <div class="stat-text"><%= stats.attack %></div>
+    </div>
+    <% } %>
+
+    <% if(stats.ranged > 0) { %>
+    <div class="stat-ranged <%= stats.attack > 0 ? 'second' : '' %>">
+      <img src="https://s3.amazonaws.com/steemmonsters/website/stats/ranged-attack.png">
+      <div class="stat-text"><%= stats.ranged %></div>
+    </div>
+    <% } %>
+
+    <% if(stats.magic > 0) { %>
+    <div class="stat-magic <%= stats.attack > 0 || stats.ranged > 0 ? 'second' : '' %>">
+      <img src="https://s3.amazonaws.com/steemmonsters/website/stats/magic-attack.png">
+      <div class="stat-text"><%= stats.magic %></div>
+    </div>
+    <% } %>
+
+    <div class="stat-speed">
+      <img src="https://s3.amazonaws.com/steemmonsters/website/stats/speed.png">
+      <div class="stat-text"><%= stats.speed %></div>
+    </div>
+
+    <% if(stats.armor > 0 && data.ruleset != 'Unprotected') { %>
+    <div class="stat-armor">
+      <img src="https://s3.amazonaws.com/steemmonsters/website/stats/defense.png">
+      <div class="stat-text"><%= stats.armor %></div>
+    </div>
+    <% } %>
+
+    <div class="stat-health">
+      <img src="https://s3.amazonaws.com/steemmonsters/website/stats/health.png">
+      <div class="stat-text"><%= stats.health %></div>
+    </div>
+
+    <div class="abilities ability-count-<%= stats.abilities.length %>">
+      <% for(var i = 0; i < stats.abilities.length; i++) { 
+              if(data.ruleset == 'Fog of War' && (stats.abilities[i] == 'Sneak' || stats.abilities[i] == 'Snipe'))
+                continue;
+
+              if(data.ruleset == 'Healed Out' && (stats.abilities[i] == 'Heal' || stats.abilities[i] == 'Tank Heal'))
+                continue;
+          %>
+      <img class="ability-<%= i %> <%= data.ruleset == 'Back to Basics' ? 'disabled' : '' %>" src="https://s3.amazonaws.com/steemmonsters/website/abilities/ability_<%= stats.abilities[i].toLowerCase().replace(' ', '-') %>.png" data-toggle="tooltip" data-placement="bottom" title="<%= stats.abilities[i] %>" />
+      <% } %>
+    </div>
+  ` : ""} ${ details.type == 'Summoner' ? `
+    <div class="summoner-stats <%= data.ruleset == 'Silenced Summoners' ? 'disabled' : '' %>">
+      <% if(stats.attack != 0) { %>
+      <div class="stat-attack-summoner">
+        <img src="https://s3.amazonaws.com/steemmonsters/website/stats/melee-attack.png">
+        <div class="stat-text" data-toggle="tooltip" data-placement="bottom" title="<%= (stats.attack > 0) ? 'All friendly Melee Attack Monsters have +' + stats.attack + ' Melee Attack' : 'All enemy Melee Attack Monsters have ' + stats.attack + ' Melee Attack' %>">
+          <%= (stats.attack > 0 ? '+' : '') + stats.attack %>
+        </div>
+      </div>
+      <% } %>
+
+      <% if(stats.ranged != 0) { %>
+      <div class="stat-ranged-summoner">
+        <img src="https://s3.amazonaws.com/steemmonsters/website/stats/ranged-attack.png">
+        <div class="stat-text" data-toggle="tooltip" data-placement="bottom" title="<%= (stats.ranged > 0) ? 'All friendly Ranged Attack Monsters have +' + stats.ranged + ' Ranged Attack' : 'All enemy Ranged Attack Monsters have ' + stats.ranged + ' Ranged Attack' %>">
+          <%= (stats.ranged > 0 ? '+' : '') + stats.ranged %>
+        </div>
+      </div>
+      <% } %>
+
+      <% if(stats.magic != 0) { %>
+      <div class="stat-magic-summoner">
+        <img src="https://s3.amazonaws.com/steemmonsters/website/stats/magic-attack.svg">
+        <div class="stat-text" data-toggle="tooltip" data-placement="bottom" title="<%= (stats.magic > 0) ? 'All friendly Magic Attack Monsters have +' + stats.magic + ' Magic Attack' : 'All enemy Magic Attack Monsters have ' + stats.magic + ' Magic Attack' %>">
+          <%= (stats.magic > 0 ? '+' : '') + stats.magic %>
+        </div>
+      </div>
+      <% } %>
+
+      <% if(stats.speed != 0) { %>
+      <div class="stat-speed-summoner">
+        <img src="https://s3.amazonaws.com/steemmonsters/website/stats/speed.png">
+        <div class="stat-text" data-toggle="tooltip" data-placement="bottom" title="<%= (stats.speed > 0) ? 'All friendly Monsters have +' + stats.speed + ' Speed' : 'All enemy Monsters have ' + stats.speed + ' Speed' %>">
+          <%= (stats.speed > 0 ? '+' : '') + stats.speed %>
+        </div>
+      </div>
+      <% } %>
+
+      <% if(stats.armor != 0) { %>
+      <div class="stat-armor-summoner">
+        <img src="https://s3.amazonaws.com/steemmonsters/website/stats/defense.png">
+        <div class="stat-text" data-toggle="tooltip" data-placement="bottom" title="<%= (stats.armor > 0) ? 'All friendly Monsters have +' + stats.armor + ' Armor' : 'All enemy Monsters have ' + stats.armor + ' Armor' %>">
+          <%= (stats.armor > 0 ? '+' : '') + stats.armor %>
+        </div>
+      </div>
+      <% } %>
+
+      <% if(stats.health != 0) { %>
+      <div class="stat-health-summoner">
+        <img src="https://s3.amazonaws.com/steemmonsters/website/stats/health.png">
+        <div class="stat-text" data-toggle="tooltip" data-placement="bottom" title="<%= (stats.health > 0) ? 'All friendly Monsters have +' + stats.health + ' Health' : 'All enemy Monsters have ' + stats.health + ' Health' %>">
+          <%= (stats.health > 0 ? '+' : '') + stats.health %>
+        </div>
+      </div>
+    ` : "" }
+  </div>
+</div>
   <%= SM.ShowComponent('card_name', data) %>
 </div>
     `;
