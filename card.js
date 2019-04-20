@@ -314,7 +314,7 @@ class Card {
       abilities += `<img class="ability-${i}" src="https://s3.amazonaws.com/steemmonsters/website/abilities/ability_${stats.abilities[i].toLowerCase().replace(' ', '-')}.png" data-toggle="tooltip" data-placement="bottom" title="${stats.abilities[i]}" />`;
     }
     return `
-    <div style="cursor: default;" id="card_${this.cardData.id}">
+    <div style="cursor: default;display: inline-block;" id="card_${this.cardData.id}">
       <img src="${Card.getImageUrl(this.cardData)}" class="card-img" card_detail_id="${this.cardData.id}" />
       <div class="relative-position">
         <div class="card-level ${this.cardData.gold ? 'gold' : '' }">
@@ -424,7 +424,6 @@ class Card {
           ` : "" }
           ` : "" }
         </div>
-      </div>
       <div class="relative-position">
         <div class="card-name ${this.cardData.gold ? 'foil' : details.color.toLowerCase()}">
           ${ this.cardData.gold && (this.cardData.edition == 0 || this.cardData.edition == 2) ? `
@@ -436,6 +435,7 @@ class Card {
           <div class="card-name-level" style="${(level_info.level >= 10) ? 'font-size: 90%' : ''}">&#x2605 ${level_info.level}</div>
         </div>
       </div>
+</div>
     </div>
     `;
   }
