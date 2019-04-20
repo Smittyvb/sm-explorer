@@ -66,7 +66,7 @@ class Card {
   }
 
   static getCardStats(card) {
-    var level = Card.GetCardLevelInfo(card).level;
+    var level = Card.getCardLevelInfo(card).level;
     var details = card.details;
     var stats = details.stats;
 
