@@ -23,7 +23,7 @@ class Card {
     let otherCardUrl = "https://s3.amazonaws.com/steemmonsters/cards_v2.2/";
 
     return ((card.edition == 1 || card.edition == 3) ? betaCardUrl : Config.otherCardUrl) + details.name + (card.gold ? '_gold' : '') + '.png';
-	}
+  }
   async cardHTML() {
     return `
 <div style="cursor: default;" id="card_${this.cardData.id}">
