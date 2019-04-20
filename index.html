@@ -327,6 +327,7 @@
             const card = new Card(name.trim());
             document.getElementById("loader").style.display = "none";
             document.getElementById("content").innerHTML = card.toHTML();
+            return;
           }
           if ((name.trim().length === 32) || (name.trim().length === 40) || (((name.trim().length === 35) || (name.trim().length === 43)) && (name.trim().indexOf("sm_") === 0))) {
             fetch("https://api.steemmonsters.io/cards/trx_lookup?trx_id=" + name.trim()).then(async function (result) {
