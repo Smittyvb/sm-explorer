@@ -334,7 +334,7 @@
           if (name.trim().match(/^(C|G)([1,2,3]-([0-9][0-9]?[0-9]?))?-[A-Z0-9]{10}$/)) {
             //card ID
             const card = new Card(name.trim());
-            document.getElementById("content").innerHTML = await card.toHTML();
+            document.getElementById("content").innerHTML = await card.toPageHTML();
             document.getElementById("loader").style.display = "none";
             return;
           }
