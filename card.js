@@ -450,7 +450,7 @@ class Card {
   async toPageHTML() {
     await this.ready;
     let marketString = this.cardData.market_id ? (" Currently" + linkify(this.card.market_id, "for sale") + ". ") : "";
-    let delegationString = this.cardData.delegated_to ? ("Currently " + linkify("delegated", this.cardData.delegated_tx) + " to " + linkify(this.cardData.delegated_to) + ". ") : "";
+    let delegationString = this.cardData.delegated_to ? ("Currently " + linkify(this.cardData.delegated_tx, "delegated") + " to " + linkify(this.cardData.delegated_to) + ". ") : "";
     return (this.cardData.gold ? "gold " : "") + this.cardData.details.name + ", owned by  <span class='username'>" + linkify(this.cardData.player) + "</span>. " + marketString + delegationString + "<br><br>" + await this.cardHTML();
   }
 }
