@@ -261,8 +261,10 @@
               edition = "alpha";
             } else if (this.data.edition === 1) {
               edition = "beta";
-            } else {
+            } else if (this.data.edition === 2) {
               edition = "promo";
+            } else {
+              edition = "reward";
             }
             return "combined all " + (this.data.gold ? "gold " : "") + edition + " " + cardData.name + "s";
           } else if (this.type === "sm_gift_cards" || this.type === "gift_cards") {
