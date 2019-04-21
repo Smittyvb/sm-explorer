@@ -448,6 +448,6 @@ class Card {
   }
   async toPageHTML() {
     await this.ready;
-    return (this.cardData.gold ? "gold " : "") + this.cardData.details.name + ", owned by  <span class='username'>" + linkify(this.cardData.player) + "</span><br>" + this.cardHTML();
+    return (this.cardData.gold ? "gold " : "") + this.cardData.details.name + ", owned by  <span class='username'>" + linkify(this.cardData.player) + "</span>.<br>" + await this.cardHTML();
   }
 }
