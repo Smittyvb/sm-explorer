@@ -226,7 +226,8 @@
             "cancel_tournament": "cancelled a tournament",
             "add_wallet": "linked their Tron wallet",
             "sm_surrender": "surrendered",
-            "set_authority": "updated their delegation authority"
+            "set_authority": "updated their delegation authority",
+            "open_all": "opened all their booster packs"
           };
           console.log(this.type);
           console.log(this);
@@ -240,7 +241,7 @@
             }
           } else if (this.type === "sm_start_quest") {
             return "started a daily quest: " + this.result.name;
-          } else if (this.type === "sm_open_all") {
+          } else if ((this.type === "sm_open_all") || (this.type === "open_all")) {
             var edition;
             if (this.result.edition === "0") {
               edition = "alpha";
