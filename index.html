@@ -225,7 +225,8 @@
             "sm_convert_cards": "converted cards from alpha to beta",
             "cancel_tournament": "cancelled a tournament",
             "add_wallet": "linked their Tron wallet",
-            "sm_surrender": "surrendered"
+            "sm_surrender": "surrendered",
+            "set_authority": "updated their delegation authority"
           };
           console.log(this.type);
           console.log(this);
@@ -295,6 +296,9 @@
               edition = "reward";
             }
             return "opened a " + edition + " booster pack"
+          } else if (this.type === "set_authority") {
+            if (this.data.delegation.length === 0) return "removed their delegation authority"
+            return "updated their delegation authority to " + this.data.delegation.map(user => "<span class='username'>" + linkify(this.data.to) + "</span>").join(", ")
           }
           return this.typeString();
         }
