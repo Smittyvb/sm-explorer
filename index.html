@@ -335,6 +335,7 @@
           document.getElementById("loader").style.display = "block";
           var name = document.getElementById("query").value;
           curPage = name;
+          location.hash = "#" + name;
           if (name.trim().match(/^(C|G)([1,2,3]-([0-9][0-9]?[0-9]?))?-[A-Z0-9]{10}$/)) {
             //card ID
             const card = new Card(name.trim());
