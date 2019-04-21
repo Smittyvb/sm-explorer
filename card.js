@@ -445,9 +445,12 @@ class Card {
   }
   async toExpandedHTML() {
     await this.ready;
+    return "<br>" + await this.cardHTML();
   }
   async toPageHTML() {
     await this.ready;
-    return (this.cardData.gold ? "gold " : "") + this.cardData.details.name + ", owned by  <span class='username'>" + linkify(this.cardData.player) + "</span>.<br>" + await this.cardHTML();
+    let marketString = this.cardData.market_id ? ("currently" + linkify(this.card.market_id, "for sale") + ".") : "";
+    let delegationString = this.cardData.delegated_to ? ("currently " + linkify("delegated", this.cardData.delegated_tx) + " to " + linkify(this.cardData.delegated_to)) : "";
+    return (this.cardData.gold ? "gold " : "") + this.cardData.details.name + ", owned by  <span class='username'>" + linkify(this.cardData.player) + "</span>." + marketString + delegationString + "<br><br>" + await this.cardHTML();
   }
 }
