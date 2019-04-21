@@ -341,7 +341,7 @@
           document.getElementById("loader").style.display = "block";
           var name = document.getElementById("query").value;
           curPage = name;
-          location.hash = "#" + name;
+          location.hash = encodeURIComponent("#" + name);
           if (name.trim().match(/^(C|G)([1,2,3]-([0-9][0-9]?[0-9]?))?-[A-Z0-9]{10}$/)) {
             //card ID
             const card = new Card(name.trim());
@@ -432,12 +432,12 @@
         window.addEventListener("hashchange", () => {
           if (location.hash === "") return;
           if (curPage === location.hash.split("#")[1]) return;
-          document.getElementById("query").value = location.hash.split("#")[1];
+          document.getElementById("query").value = decodeURIComponent(location.hash.split("#")[1]);
           updatePage();
         });
         if (location.hash) {
           document.getElementById("query").value = location.hash.split("#")[1];
-          curPage = location.hash.split("#")[1];
+          curPage = decodeURIComponent(location.hash.split("#")[1]);
           updatePage();
         }
         document.getElementById("loader").style.display = "none";
