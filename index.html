@@ -330,9 +330,11 @@
       }
       var updatePage;
       window.addEventListener("load", function () {
+        let curPage = "";
         updatePage = async function () {
           document.getElementById("loader").style.display = "block";
           var name = document.getElementById("query").value;
+          curPage = name;
           if (name.trim().match(/^(C|G)([1,2,3]-([0-9][0-9]?[0-9]?))?-[A-Z0-9]{10}$/)) {
             //card ID
             const card = new Card(name.trim());
@@ -420,6 +422,17 @@
           });
         }
         document.getElementById("query").oninput = updatePage;
+        document.addEventListener("hashchange", () => {
+          if (location.hash === "") return;
+          if (curPage === location.hash.split("#")[1]) return;
+          document.getElementById("query").value = location.hash.split("#")[1];
+          updatePage();
+        });
+        if (location.hash) {
+          document.getElementById("query").value = location.hash.split("#")[1];
+          curPage = location.hash.split("#")[1];
+          updatePage();
+        }
         document.getElementById("loader").style.display = "none";
       });
     </script>
