@@ -432,12 +432,12 @@
         window.addEventListener("hashchange", () => {
           if (location.hash === "") return;
           if (curPage === location.hash.split("#")[1]) return;
-          document.getElementById("query").value = decodeURIComponent(location.hash.split("#")[1]);
+          document.getElementById("query") = decodeURIComponent(location.hash.split("#")[1]);
           updatePage();
         });
         if (location.hash) {
           document.getElementById("query").value = location.hash.split("#")[1];
-          curPage = decodeURIComponent(location.hash.split("#")[1]);
+          document.getElementById("query") = decodeURIComponent(location.hash.split("#")[1]);
           updatePage();
         }
         document.getElementById("loader").style.display = "none";
