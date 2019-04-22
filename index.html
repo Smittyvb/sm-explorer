@@ -436,7 +436,8 @@
                   console.warn("weird", element);
                   return;
                 }
-                element.element.addEventListener("mouseover", function () {
+                //disabled for now
+                /*element.element.addEventListener("mouseover", function () {
                   clearTimeout(pendingRetraction);
                   if (expanded) return;
                   expanded = true;
@@ -455,7 +456,7 @@
                     return;
                   }
                   this.innerHTML = element.tx.toHTML();
-                });
+                });*/
               })(elements[item])
             }
           });
