@@ -445,7 +445,7 @@ class Card {
   }
   async toExpandedHTML() {
     await this.ready;
-    return "<br>" + await this.cardHTML();
+    return await this.cardHTML();
   }
   async toPageHTML() {
     await this.ready;
