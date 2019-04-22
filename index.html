@@ -243,7 +243,7 @@
             return "started a daily quest: " + this.result.name;
           } else if ((this.type === "sm_open_all") || (this.type === "open_all")) {
             var edition;
-            if ((this.result.edition === 0) {
+            if (this.result.edition === 0) {
               edition = "alpha";
             } else if (this.result.edition === 1) {
               edition = "beta";
