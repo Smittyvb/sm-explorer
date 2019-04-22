@@ -278,9 +278,9 @@
             (async function () {
               let cardHTML = "<br>";
               let alreadyGotCards = true;
-              for (var i = 0; i < self.result.cards.length; i++) {
-                if (cardObjects[self.result.cards[i]]) alreadyGotCards = false;
-                let obj = getCardObject(self.result.cards[i]);
+              for (var i = 0; i < self.result.cards.map(card => card.uid).length; i++) {
+                if (cardObjects[self.result.cards.map(card => card.uid)[i]]) alreadyGotCards = false;
+                let obj = getCardObject(self.result.cards.map(card => card.uid)[i]);
                 cardHTML += await obj.toExpandedHTML();
               }
               setTimeout(() => document.getElementById(eleId).innerHTML = cardHTML, alreadyGotCards ? 0 : 100);
@@ -360,9 +360,9 @@
             (async function () {
               let cardHTML = "<br>";
               let alreadyGotCards = true;
-              for (var i = 0; i < self.result.cards.length; i++) {
-                if (cardObjects[self.result.cards[i]]) alreadyGotCards = false;
-                let obj = getCardObject(self.result.cards[i]);
+              for (var i = 0; i < self.result.cards.map(card => card.uid).length; i++) {
+                if (cardObjects[self.result.cards.map(card => card.uid)[i]]) alreadyGotCards = false;
+                let obj = getCardObject(self.result.cards.map(card => card.uid)[i]);
                 cardHTML += await obj.toExpandedHTML();
               }
               setTimeout(() => document.getElementById(eleId).innerHTML = cardHTML, alreadyGotCards ? 0 : 100);
