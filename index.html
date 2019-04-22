@@ -255,7 +255,7 @@
             let cardHTML = "";
             this.data.cards.forEach(card => {
               let obj = getCardObject(card);
-              cardHTML += obj.toExtendedHTML();
+              cardHTML += obj.toExpandedHTML();
             });
             return "combined " + this.data.cards.length + " cards " + cardHTML;
           } else if (this.type === "sm_battle") {
