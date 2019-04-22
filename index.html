@@ -244,8 +244,23 @@
         }
         summary() {
           if (this.type === "sm_claim_reward") {
+            let eleId = Math.random().toString(36);
+            let self = this;
+            let cards = this.result.map(card => card.uid);
+            (async function () {
+              let cardHTML = "<br>";
+              let alreadyGotCards = true;
+              for (var i = 0; i < cards.length; i++) {
+                if (cardObjects[cards[i]]) alreadyGotCards = false;
+                let obj = getCardObject(cards[i]);
+                cardHTML += await obj.toExpandedHTML();
+              }
+              setTimeout(() => document.getElementById(eleId).innerHTML = cardHTML, alreadyGotCards ? 0 : 100);
+            })();
             if (this.data.type === "quest") {
-              return "claimed a daily quest reward";
+              return "claimed a daily quest reward" + "<div id=\"" + eleId + "\"></div>";;
+            } else {
+              return "claimed rewards" + "<div id=\"" + eleId + "\"></div>";;
             }
           } else if (this.type === "sm_start_quest") {
             return "started a daily quest: " + this.result.name;
@@ -258,7 +273,19 @@
             } else {
               edition = "promo";
             }
-            return "opened all " + this.result.cards.length + " " + edition + " booster packs"
+            let eleId = Math.random().toString(36);
+            let self = this;
+            (async function () {
+              let cardHTML = "<br>";
+              let alreadyGotCards = true;
+              for (var i = 0; i < self.result.cards.length; i++) {
+                if (cardObjects[self.result.cards[i]]) alreadyGotCards = false;
+                let obj = getCardObject(self.result.cards[i]);
+                cardHTML += await obj.toExpandedHTML();
+              }
+              setTimeout(() => document.getElementById(eleId).innerHTML = cardHTML, alreadyGotCards ? 0 : 100);
+            })();
+            return "opened all " + (this.result.cards.length / 5).toFixed(0) + " " + edition + " booster packs" + "<div id=\"" + eleId + "\"></div>";
           } else if (this.type === "sm_combine_cards") {
             let eleId = Math.random().toString(36);
             let self = this;
@@ -308,7 +335,7 @@
               }
               setTimeout(() => document.getElementById(eleId).innerHTML = cardHTML, alreadyGotCards ? 0 : 100);
             })();
-            return "gifted " + this.data.cards.length + " card" + ((this.data.cards.length !== 1) ? "s" : "") + " to <span class='username'>" + linkify(this.data.to) + "</span>" + "<div id=\"" + eleId + "\"></div>"
+            return "gifted " + this.data.cards.length + " card" + ((this.data.cards.length !== 1) ? "s" : "") + " to <span class='username'>" + linkify(this.data.to) + "</span>" + "<div id=\"" + eleId + "\"></div>";
           } else if (this.type === "sm_gift_packs") {
             var edition;
             if (this.data.edition === 0) {
@@ -328,7 +355,19 @@
             } else {
               edition = "reward";
             }
-            return "opened a " + edition + " booster pack"
+            let eleId = Math.random().toString(36);
+            let self = this;
+            (async function () {
+              let cardHTML = "<br>";
+              let alreadyGotCards = true;
+              for (var i = 0; i < self.result.cards.length; i++) {
+                if (cardObjects[self.result.cards[i]]) alreadyGotCards = false;
+                let obj = getCardObject(self.result.cards[i]);
+                cardHTML += await obj.toExpandedHTML();
+              }
+              setTimeout(() => document.getElementById(eleId).innerHTML = cardHTML, alreadyGotCards ? 0 : 100);
+            })();
+            return "opened a " + edition + " booster pack" + "<div id=\"" + eleId + "\"></div>";
           } else if (this.type === "set_authority") {
             if (this.data.delegation.length === 0) return "removed their delegation authority"
             return "updated their delegation authority to " + this.data.delegation.map(user => "<span class='username'>" + linkify(user) + "</span>").join(", ")
