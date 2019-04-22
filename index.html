@@ -256,7 +256,7 @@
             let self = this;
             (async function () {
               let cardHTML = "";
-              for (var i = 0; i < self.data.cards; i++) {
+              for (var i = 0; i < self.data.cards.length; i++) {
                 let obj = getCardObject(self.data.cards[i]);
                 cardHTML += await obj.toExpandedHTML();
               }
