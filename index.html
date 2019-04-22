@@ -252,7 +252,12 @@
             }
             return "opened all " + this.result.cards.length + " " + edition + " booster packs"
           } else if (this.type === "sm_combine_cards") {
-            return "combined " + this.data.cards.length + " cards"; 
+            let cardHTML = "";
+            this.data.cards.forEach(card => {
+              let obj = getCardObject(card);
+              cardHTML += obj.toExtendedHTML();
+            });
+            return "combined " + this.data.cards.length + " cards " + cardHTML;
           } else if (this.type === "sm_battle") {
             if (this.data.action === "surrender") {
               return "surrendered";
