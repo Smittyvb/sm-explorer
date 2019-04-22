@@ -412,9 +412,6 @@
               }
               html += '<span id="' + id + '">' + elements[id].tx.toHTML() + "</span>";
             });
-            html = `
-              Splinters that win against this user: <span class="raw-data">${JSON.stringify(winningSummoners)}</span>
-            ` + html;
             document.getElementById("loader").style.display = "none";
             document.getElementById("content").innerHTML = html;
             for (var item in elements) {
