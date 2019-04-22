@@ -260,11 +260,13 @@
             let self = this;
             (async function () {
               let cardHTML = "<br>";
+              let alreadyGotCards = true;
               for (var i = 0; i < self.data.cards.length; i++) {
+                if (cardObjects[self.data.cards[i]]) alreadyGotCards = false;
                 let obj = getCardObject(self.data.cards[i]);
                 cardHTML += await obj.toExpandedHTML();
               }
-              setTimeout(() => document.getElementById(eleId).innerHTML = cardHTML, 100);
+              setTimeout(() => document.getElementById(eleId).innerHTML = cardHTML, alreadyGotCards ? 0 : 100);
             })();
             return "combined " + this.data.cards.length + " cards " + "<div id=\"" + eleId + "\"></div>";
           } else if (this.type === "sm_battle") {
