@@ -232,7 +232,7 @@
           console.log(this.type);
           console.log(this);
           if (types[this.type]) return types[this.type];
-          return '<span class="raw-data">' + this.type + "</span>";
+          return '<d class="raw-data">' + this.type + "</span>";
         }
         summary() {
           if (this.type === "sm_claim_reward") {
@@ -262,7 +262,7 @@
               }
               setTimeout(() => document.getElementById(eleId).innerHTML = cardHTML, 100);
             })();
-            return "combined " + this.data.cards.length + " cards " + "<span id=\"" + eleId + "\"></span>";
+            return "combined " + this.data.cards.length + " cards " + "<div id=\"" + eleId + "\"></div>";
           } else if (this.type === "sm_battle") {
             if (this.data.action === "surrender") {
               return "surrendered";
