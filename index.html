@@ -200,6 +200,7 @@
         typeString() {
           var types = {
             "sm_find_match": "started looking for a match",
+            "find_match": "started looking for a match",
             "sm_open_pack": "opened a pack",
             "open_pack": "opened a pack",
             "sm_claim_reward": "claimed a reward",
@@ -337,7 +338,7 @@
           return this.typeString();
         }
         toHTML() {
-          if ((this.type === "sm_submit_team") || (this.type === "sm_team_reveal") || (this.type === "sm_find_match")) return "";
+          if ((this.type === "sm_submit_team") || (this.type === "sm_team_reveal") || (this.type === "sm_find_match") || (this.type === "find_match")) return "";
           var date = new Date(this.date);
           return `
             <div class="transaction${this.error ? " error-tx" : ""}" ${this.error ? 'title="Error: ' + this.error + '"e' : ""}>
