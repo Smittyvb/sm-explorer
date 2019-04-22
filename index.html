@@ -6,6 +6,9 @@
     <title>SM explorer</title>
     <link rel="stylesheet" href="SM.css" />
     <style>
+      .block-id {
+        font-family: monospace;
+      }
       .stat-text {
         line-height: 1.42857143;
       }
@@ -340,7 +343,7 @@
             <div class="transaction${this.error ? " error-tx" : ""}" ${this.error ? 'title="Error: ' + this.error + '"e' : ""}>
               <span class="username">${linkify(this.player)}</span>
               ${this.summary()}
-              <span class="block-number">${linkify(this.id, this.id.slice(0, 8))} ${date.toLocaleDateString()} ${date.toLocaleTimeString()}</span>
+              <span class="block-number"><span class="block-id">${linkify(this.id, this.id.slice(0, 8))}</span> ${date.toLocaleDateString()} ${date.toLocaleTimeString()}</span>
             </div>
           `;
         }
