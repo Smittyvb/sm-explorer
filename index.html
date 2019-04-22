@@ -253,10 +253,10 @@
             return "opened all " + this.result.cards.length + " " + edition + " booster packs"
           } else if (this.type === "sm_combine_cards") {
             let cardHTML = "";
-            this.data.cards.forEach(card => {
-              let obj = getCardObject(card);
+            for (var i = 0; i < this.data.cards; i++) {
+              let obj = getCardObject(this.data.cards[i]);
               cardHTML += obj.toExpandedHTML();
-            });
+            }
             return "combined " + this.data.cards.length + " cards " + cardHTML;
           } else if (this.type === "sm_battle") {
             if (this.data.action === "surrender") {
