@@ -299,7 +299,7 @@
             return "opened a " + edition + " booster pack"
           } else if (this.type === "set_authority") {
             if (this.data.delegation.length === 0) return "removed their delegation authority"
-            return "updated their delegation authority to " + this.data.delegation.map(user => "<span class='username'>" + linkify(this.data.to) + "</span>").join(", ")
+            return "updated their delegation authority to " + this.data.delegation.map(user => "<span class='username'>" + linkify(user) + "</span>").join(", ")
           }
           return this.typeString();
         }
