@@ -261,7 +261,7 @@
               }
               setTimeout(() => document.getElementById(eleId).innerHTML = cardHTML, 100);
             })();
-            return "combined " + this.data.cards.length + " cards " + "<span id=\"" + eleId "\"></span>";
+            return "combined " + this.data.cards.length + " cards " + "<span id=\"" + eleId + "\"></span>";
           } else if (this.type === "sm_battle") {
             if (this.data.action === "surrender") {
               return "surrendered";
