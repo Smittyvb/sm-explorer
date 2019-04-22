@@ -252,12 +252,16 @@
             }
             return "opened all " + this.result.cards.length + " " + edition + " booster packs"
           } else if (this.type === "sm_combine_cards") {
-            let cardHTML = "";
-            for (var i = 0; i < this.data.cards; i++) {
-              let obj = getCardObject(this.data.cards[i]);
-              cardHTML += await obj.toExpandedHTML();
-            }
-            return "combined " + this.data.cards.length + " cards " + cardHTML;
+            let eleId = Math.random().toString(36);
+            (async function () {
+              let cardHTML = "";
+              for (var i = 0; i < this.data.cards; i++) {
+                let obj = getCardObject(this.data.cards[i]);
+                cardHTML += await obj.toExpandedHTML();
+              }
+              setTimeout(() => document.getElementById(eleId).innerHTML = cardHTML, 100);
+            })();
+            return "combined " + this.data.cards.length + " cards " + "<span id=\"" + eleId "\"></span>";
           } else if (this.type === "sm_battle") {
             if (this.data.action === "surrender") {
               return "surrendered";
