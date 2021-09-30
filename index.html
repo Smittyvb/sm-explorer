@@ -383,7 +383,7 @@
             })();
             return "opened a " + edition + " booster pack" + "<div id=\"" + eleId + "\"></div>";
           } else if (this.type === "set_authority") {
-            if (this.data.delegation.length === 0) return "removed their delegation authority"
+            if (!this.data.delegation || this.data.delegation.length === 0) return "removed their delegation authority"
             return "updated their delegation authority to " + this.data.delegation.map(user => "<span class='username'>" + linkify(user) + "</span>").join(", ")
           } else if (this.type === "add_wallet") {
             return "linked their Tron wallet: " + this.data.address
