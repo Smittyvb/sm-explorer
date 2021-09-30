@@ -252,7 +252,8 @@
           };
           console.log(this.type);
           console.log(this);
-          if (types[this.type] || types["sm_" + this.type]) return types[this.type];
+          if (types[this.type]) return types[this.type];
+          if (types["sm_" + this.type]) return types["sm_" + this.type];
           return '<span class="raw-data">' + this.type + "</span>";
         }
         summary() {
